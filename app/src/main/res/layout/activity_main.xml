@@ -41,15 +41,15 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="update"
-        android:textSize="10sp"
         android:layout_marginEnd="16dp"
         android:layout_marginRight="16dp"
+        android:onClick="Read_SMS"
+        android:text="update"
         android:textColor="@color/white"
+        android:textSize="10sp"
         app:layout_constraintBottom_toBottomOf="@id/textTitle"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@id/textTitle"
-        android:onClick="Read_SMS"
 
 
         />
@@ -183,38 +183,75 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
     </com.google.android.material.card.MaterialCardView>
 
-
-    <ListView
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_marginTop="10dp"
         android:layout_height="wrap_content"
-        android:id="@+id/listview"
-        android:paddingStart="16dp"
-        android:paddingEnd="16dp"
-        android:scrollbars="none"
-        android:clickable="false"
-        app:layout_constraintTop_toBottomOf="@id/cardHeader"
-        tools:listitem="@layout/list_item1"
-        android:divider="@null"
-        android:dividerHeight="@dimen/_8sdp"/>
-<!--    <ScrollView-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="0dp"-->
-<!--        android:clipToPadding="false"-->
-<!--        android:overScrollMode="never"-->
-<!--        android:padding="16dp"-->
-<!--        android:scrollbars="none"-->
-<!--        app:layout_constraintBottom_toBottomOf="parent"-->
-<!--        app:layout_constraintTop_toBottomOf="@id/cardHeader">-->
-<!--                <LinearLayout-->
-<!--                    android:id="@+id/allTransactions"-->
-<!--                    android:layout_width="match_parent"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:orientation="vertical"-->
-<!--                    >-->
-<!--                </LinearLayout>-->
-<!--        -->
+        android:orientation="vertical"
+        app:layout_constraintTop_toBottomOf="@id/cardHeader">
 
-<!--    </ScrollView>-->
+        <RelativeLayout
+            android:layout_width="200dp"
+            android:layout_height="60dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="16dp"
+            android:background="@drawable/bg1"
+            android:elevation="10dp">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:src="@drawable/bank"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="16dp"
+                />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="All Transations"
+                android:textColor="#ffffff" />
+
+
+        </RelativeLayout>
+
+
+        <ListView
+            android:id="@+id/listview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:clickable="false"
+            android:divider="@null"
+            android:dividerHeight="@dimen/_8sdp"
+            android:paddingStart="16dp"
+            android:focusable="false"
+            android:focusableInTouchMode="false"
+            android:listSelector="@android:color/transparent"
+            android:paddingEnd="16dp"
+            android:scrollbars="none"
+            app:layout_constraintTop_toBottomOf="@id/cardHeader"
+            tools:listitem="@layout/list_item1" />
+    </LinearLayout>
+    <!--    <ScrollView-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:layout_height="0dp"-->
+    <!--        android:clipToPadding="false"-->
+    <!--        android:overScrollMode="never"-->
+    <!--        android:padding="16dp"-->
+    <!--        android:scrollbars="none"-->
+    <!--        app:layout_constraintBottom_toBottomOf="parent"-->
+    <!--        app:layout_constraintTop_toBottomOf="@id/cardHeader">-->
+    <!--                <LinearLayout-->
+    <!--                    android:id="@+id/allTransactions"-->
+    <!--                    android:layout_width="match_parent"-->
+    <!--                    android:layout_height="wrap_content"-->
+    <!--                    android:orientation="vertical"-->
+    <!--                    >-->
+    <!--                </LinearLayout>-->
+    <!--        -->
+
+    <!--    </ScrollView>-->
 </androidx.constraintlayout.widget.ConstraintLayout>
 

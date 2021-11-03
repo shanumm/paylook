@@ -38,13 +38,13 @@
 //
 package com.myapplication.permission;
 
-public class MyMovieData {
+public class MyTransactionData {
 
     private String movieName;
     private String movieDate;
     private Integer movieImage;
 
-    public MyMovieData(String movieName, String movieDate, Integer movieImage) {
+    public MyTransactionData(String movieName, String movieDate, Integer movieImage) {
         this.movieName = movieName;
         this.movieDate = movieDate;
         this.movieImage = movieImage;

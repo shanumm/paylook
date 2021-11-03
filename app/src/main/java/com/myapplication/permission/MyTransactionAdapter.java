@@ -81,13 +81,13 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-public class MyMovieAdapter extends RecyclerView.Adapter<MyMovieAdapter.ViewHolder> {
+public class MyTransactionAdapter extends RecyclerView.Adapter<MyTransactionAdapter.ViewHolder> {
 
-    MyMovieData[] myMovieData;
+    MyTransactionData[] myTransactionData;
     Context context;
 
-    public MyMovieAdapter(MyMovieData[] myMovieData,MainActivity activity) {
-        this.myMovieData = myMovieData;
+    public MyTransactionAdapter(MyTransactionData[] myTransactionData, MainActivity activity) {
+        this.myTransactionData = myTransactionData;
         this.context = activity;
     }
 
@@ -102,22 +102,22 @@ public class MyMovieAdapter extends RecyclerView.Adapter<MyMovieAdapter.ViewHold
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        final MyMovieData myMovieDataList = myMovieData[position];
-        holder.textViewName.setText(myMovieDataList.getMovieName());
-        holder.textViewDate.setText(myMovieDataList.getMovieDate());
-        holder.movieImage.setImageResource(myMovieDataList.getMovieImage());
+        final MyTransactionData myTransactionDataList = myTransactionData[position];
+        holder.textViewName.setText(myTransactionDataList.getMovieName());
+        holder.textViewDate.setText(myTransactionDataList.getMovieDate());
+        holder.movieImage.setImageResource(myTransactionDataList.getMovieImage());
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(context, myMovieDataList.getMovieName(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, myTransactionDataList.getMovieName(), Toast.LENGTH_SHORT).show();
             }
         });
     }
 
     @Override
     public int getItemCount() {
-        return myMovieData.length;
+        return myTransactionData.length;
     }
 
 
