@@ -192,6 +192,7 @@
         android:paddingStart="16dp"
         android:paddingEnd="16dp"
         android:scrollbars="none"
+        android:clickable="false"
         app:layout_constraintTop_toBottomOf="@id/cardHeader"
         tools:listitem="@layout/list_item1"
         android:divider="@null"

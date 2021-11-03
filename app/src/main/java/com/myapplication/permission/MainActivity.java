@@ -123,6 +123,10 @@ public class MainActivity extends AppCompatActivity {
 
     ActivityMainBinding binding;
 
+    ArrayList<String> name = new ArrayList<String>();
+    ArrayList<String> lastMessage = new ArrayList<String>();
+    ArrayList<String> lastmsgTime = new ArrayList<String>();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -137,13 +141,14 @@ public class MainActivity extends AppCompatActivity {
         Cursor cursor = getContentResolver().query(Uri.parse("content://sms"), null, null, null, null);
         int indexOfAmountStart = 0;
         int indexOfAmountEnd = 0;
-        String totalAmount="";
-        ArrayList<String> name = new ArrayList<String>(50);
-        for (int i = 0; i < 50; i++) {
+        int numberOfMessages=0;
+        String totalAmount = "9";
+
+        for (int i = 0; i < 200; i++) {
             cursor.moveToPosition(i);
             String str = cursor.getString(12);
-            totalAmount = "";
             if (str.contains("debited") || str.contains("credited")) {
+                numberOfMessages++;
                 indexOfAmountStart = str.indexOf("INR");
                 while (str.charAt(indexOfAmountStart) != ' ') {
                     indexOfAmountStart++;
@@ -155,8 +160,6 @@ public class MainActivity extends AppCompatActivity {
                 totalAmount = str.substring(indexOfAmountStart, indexOfAmountEnd);
 
 
-
-
 //               if (str.contains("credited")) {
 //                    MoneyText.setTextColor(Color.GREEN);
 //                    MoneyText.setText(totalAmount);
@@ -166,22 +169,21 @@ public class MainActivity extends AppCompatActivity {
 //                    MoneyText.setText(totalAmount);
 //                    myTextView.append("\n Debited : " + totalAmount + " Rs\n\n\n");
 //                }
+                name.add(totalAmount);
+                lastMessage.add(totalAmount);
+                lastmsgTime.add(totalAmount);
 
             }
-            name.add(totalAmount);
+
 
         }
-        String[] lastMessage = {"Heye", "Supp", "Let's Catchup", "Dinner tonight?", "Gotta go",
-                "i'm in meeting", "Gotcha", "Let's Go", "any Weekend Plans?"};
-        String[] lastmsgTime = {"8:45 pm", "9:00 am", "7:34 pm", "6:32 am", "5:76 am",
-                "5:00 am", "7:34 pm", "2:32 am", "7:76 am"};
 
 
         ArrayList<User> userArrayList = new ArrayList<>();
 
-        for (int j = 0; j < 6; j++) {
+        for (int j = 0; j < numberOfMessages; j++) {
 
-            User user = new User(name.get(j), lastMessage[j], lastmsgTime[j]);
+            User user = new User(name.get(j), lastMessage.get(j), lastmsgTime.get(j));
             userArrayList.add(user);
 
         }
