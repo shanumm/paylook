@@ -29,11 +29,12 @@
         android:layout_marginBottom="16dp"
         android:background="#fff"
         android:drawableRight="@drawable/ic_baseline_arrow_forward_24"
-        android:drawableTint="@color/gradient_start_color"
-        android:text="Next"
-        android:textColor="@color/gradient_start_color"
+        android:drawableTint="#ffffff"
+        android:text="@string/next"
+        android:textColor="#ffffff"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        />
 
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/tab_indicator"
@@ -44,6 +45,7 @@
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
         android:layout_marginBottom="16dp"
+        android:background="#ffffff"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/btn_next"
         app:layout_constraintHorizontal_bias="0.0"
@@ -63,7 +65,7 @@
         android:layout_marginRight="8dp"
         android:layout_marginBottom="40dp"
         android:background="@drawable/btn_gradient_style"
-        android:text="Get Started"
+        android:text="@string/get_started"
         android:textColor="#fff"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -79,7 +81,7 @@
         android:layout_marginTop="24dp"
         android:layout_marginEnd="24dp"
         android:layout_marginRight="24dp"
-        android:text="Skip"
+        android:text="@string/skip"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

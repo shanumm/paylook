@@ -110,17 +110,22 @@ import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.TextView;
 
 
 //import com.myapplication.permission.ActivityMainBinding;
 import com.myapplication.permission.databinding.ActivityMainBinding;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 public class MainActivity extends AppCompatActivity {
 
+    private TextView mytext;
     ActivityMainBinding binding;
 
     ArrayList<String> name = new ArrayList<String>();
@@ -130,10 +135,14 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         ActivityCompat.requestPermissions(MainActivity.this, new String[]{Manifest.permission.READ_SMS}, PackageManager.PERMISSION_GRANTED);
 
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+        mytext = findViewById(R.id.textViews);
+
+
     }
 
 
@@ -141,25 +150,51 @@ public class MainActivity extends AppCompatActivity {
         Cursor cursor = getContentResolver().query(Uri.parse("content://sms"), null, null, null, null);
         int indexOfAmountStart = 0;
         int indexOfAmountEnd = 0;
-        int numberOfMessages=0;
+        int numberOfMessages = 0;
         String totalAmount = "9";
+        String str = "";
+        String date = "";
+        String transactionNameString = "";
+        String transactionDateAndTime = "";
 
-        for (int i = 0; i < 200; i++) {
+
+        for (int i = 0; i < cursor.getCount(); i++) {
             cursor.moveToPosition(i);
-            String str = cursor.getString(12);
-            if (str.contains("debited") || str.contains("credited")) {
+
+//get message body
+
+            str = cursor.getString(12);
+
+
+// get sender/reciever name
+            transactionNameString = cursor.getString(2);
+
+//get date and time of transaction
+
+//            transactionDateAndTime = cursor.getString(cursor.getColumnIndex("date"));
+            date = cursor.getString(cursor.getColumnIndex("date"));
+            SimpleDateFormat formatter = new SimpleDateFormat("dd, MMM HH:mm");
+            date = formatter.format(new Date(Long.parseLong(date)));
+
+
+            if ((str.contains("debit") || str.contains("Debit") || str.contains("debited") || str.contains("credited") || str.contains("transferred") || str.contains("Credited") || str.contains("Debited") || str.contains("Received") || str.contains("received")) && (str.contains("A/c") || str.contains("A/C"))) {
                 numberOfMessages++;
-                indexOfAmountStart = str.indexOf("INR");
-                while (str.charAt(indexOfAmountStart) != ' ') {
-                    indexOfAmountStart++;
+                if (str.contains("INR")) {
+                    indexOfAmountStart = str.indexOf("INR");
+                    while (!Character.isDigit(str.charAt(indexOfAmountStart))) {
+                        indexOfAmountStart++;
+                    }
+                } else if (str.contains("Rs")) {
+                    indexOfAmountStart = str.indexOf("Rs");
+                    while (!Character.isDigit(str.charAt(indexOfAmountStart))) {
+                        indexOfAmountStart++;
+                    }
                 }
-                indexOfAmountEnd = indexOfAmountStart + 1;
-                while (str.charAt(indexOfAmountEnd) != ' ') {
+                indexOfAmountEnd = indexOfAmountStart;
+                while (!Character.isLetter(str.charAt(indexOfAmountEnd))) {
                     indexOfAmountEnd++;
                 }
                 totalAmount = str.substring(indexOfAmountStart, indexOfAmountEnd);
-
-
 //               if (str.contains("credited")) {
 //                    MoneyText.setTextColor(Color.GREEN);
 //                    MoneyText.setText(totalAmount);
@@ -169,9 +204,9 @@ public class MainActivity extends AppCompatActivity {
 //                    MoneyText.setText(totalAmount);
 //                    myTextView.append("\n Debited : " + totalAmount + " Rs\n\n\n");
 //                }
-                name.add(totalAmount);
-                lastMessage.add(totalAmount);
-                lastmsgTime.add(totalAmount);
+                name.add(transactionNameString);
+                lastMessage.add(date);
+                lastmsgTime.add(totalAmount.trim());
 
             }
 

@@ -8,7 +8,7 @@ public class User {
     public User(String name, String lastMessage, String lastMsgTime) {
         this.name = name;
         this.lastMessage = lastMessage;
-        this.lastMsgTime = lastMsgTime;
+        this.lastMsgTime = lastMsgTime + "Rs";
 
     }
 }
