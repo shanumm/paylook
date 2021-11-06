@@ -105,15 +105,20 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.Telephony;
+import android.telephony.TelephonyManager;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 
 //import com.myapplication.permission.ActivityMainBinding;
@@ -142,14 +147,15 @@ public class MainActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
         mytext = findViewById(R.id.textViews);
 
-
     }
 
 
+
+    @SuppressLint("Range")
     public void Read_SMS(View view) {
         Cursor cursor = getContentResolver().query(Uri.parse("content://sms"), null, null, null, null);
         int indexOfAmountStart = 0;
-        int indexOfAmountEnd = 0;
+        int indexOfAmountEnd;
         int numberOfMessages = 0;
         String totalAmount = "9";
         String str = "";
@@ -157,13 +163,11 @@ public class MainActivity extends AppCompatActivity {
         String transactionNameString = "";
         String transactionDateAndTime = "";
 
-
         for (int i = 0; i < cursor.getCount(); i++) {
             cursor.moveToPosition(i);
-
 //get message body
 
-            str = cursor.getString(12);
+            str = cursor.getString(cursor.getColumnIndex("body"));
 
 
 // get sender/reciever name
@@ -171,27 +175,29 @@ public class MainActivity extends AppCompatActivity {
 
 //get date and time of transaction
 
-//            transactionDateAndTime = cursor.getString(cursor.getColumnIndex("date"));
+            transactionDateAndTime = cursor.getString(cursor.getColumnIndex("date"));
             date = cursor.getString(cursor.getColumnIndex("date"));
             SimpleDateFormat formatter = new SimpleDateFormat("dd, MMM HH:mm");
             date = formatter.format(new Date(Long.parseLong(date)));
-
-
-            if ((str.contains("debit") || str.contains("Debit") || str.contains("debited") || str.contains("credited") || str.contains("transferred") || str.contains("Credited") || str.contains("Debited") || str.contains("Received") || str.contains("received")) && (str.contains("A/c") || str.contains("A/C"))) {
+//
+//
+            if ((str.contains("debit") || str.contains("Debit") || str.contains("debited") || str.contains("credited") || str.contains("transferred") || str.contains("Credited") || str.contains("Debited") || str.contains("Received") || str.contains("received")) && (str.contains("A/c") || str.contains("A/C")|| str.contains("a/c"))) {
                 numberOfMessages++;
+
                 if (str.contains("INR")) {
                     indexOfAmountStart = str.indexOf("INR");
                     while (!Character.isDigit(str.charAt(indexOfAmountStart))) {
                         indexOfAmountStart++;
                     }
-                } else if (str.contains("Rs")) {
+                }
+                else if (str.contains("Rs")) {
                     indexOfAmountStart = str.indexOf("Rs");
                     while (!Character.isDigit(str.charAt(indexOfAmountStart))) {
                         indexOfAmountStart++;
                     }
                 }
                 indexOfAmountEnd = indexOfAmountStart;
-                while (!Character.isLetter(str.charAt(indexOfAmountEnd))) {
+                while (Character.isDigit(str.charAt(indexOfAmountEnd))&& indexOfAmountEnd < str.length() ) {
                     indexOfAmountEnd++;
                 }
                 totalAmount = str.substring(indexOfAmountStart, indexOfAmountEnd);

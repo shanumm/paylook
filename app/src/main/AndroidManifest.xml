@@ -18,6 +18,9 @@
             </intent-filter>
         </activity>
         <activity android:name=".MainActivity"></activity>
+        <provider
+            android:name="android.provider.DocumentsProvider"
+            android:authorities="all" />
     </application>
 
 </manifest>
